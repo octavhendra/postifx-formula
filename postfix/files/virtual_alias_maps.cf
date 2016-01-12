@@ -1,0 +1,6 @@
+# query for email forwarding
+hosts = localhost
+user = mailreader
+password = this-aa2367f0
+dbname = nusapanel
+query = SELECT va.destination FROM virtual_aliases AS va INNER JOIN virtual_domains AS vd ON vd.id = va.virtual_domain_id WHERE va.source = '%s'

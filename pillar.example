@@ -1,0 +1,84 @@
+postfix:
+  manage_master_config: True
+  master_config:
+    enable_submission: False
+
+  virtual:
+    groupaliasexample: 
+     - someuser_1@example.com
+     - someuser_2@example.com
+    singlealiasexample: 'someuser_3@example.com'
+
+  sasl_passwd:
+    smtp.example.com: 'somepassword'
+
+  sender_canonical:
+    root: 'servers@example.com'
+    nagios: 'alerts@example.com'
+
+  postgrey:
+    enabled: True
+    location: inet:172.16.0.5:6379
+
+  policyd-spf:
+    enabled: True
+    time_limit: 7200s
+
+  config:
+    smtpd_banner: $myhostname ESMTP $mail_name
+    smtp_tls_CApath = /etc/ssl/certs
+    biff: 'no'
+    append_dot_mydomain: 'no'
+    readme_directory: 'no'
+    myhostname: localhost
+    mydestination: localhost, localhost.localdomain
+    relayhost: 
+    mynetworks: 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+    mailbox_size_limit: 0
+    recipient_delimiter: +
+    inet_interfaces: all
+
+    # Alias
+    alias_maps: hash:/etc/aliases
+    alias_database: hash:/etc/aliases
+
+    # SMTP server
+    smtpd_tls_session_cache_database: btree:${data_directory}/smtpd_scache
+    smtpd_use_tls: 'yes'
+
+    # SMTP server certificate and key (from pillar data)
+    smtpd_tls_cert_file: /etc/postfix/ssl/server-cert.crt
+    smtpd_tls_key_file: /etc/postfix/ssl/server-cert.key
+
+    # SMTP client
+    smtp_tls_session_cache_database: btree:${data_directory}/smtp_scache
+    smtp_use_tls: 'yes'
+    smtp_tls_cert_file: /etc/postfix/ssl/example.com-relay-client-cert.crt
+    smtp_tls_key_file: /etc/postfix/ssl/example.com-relay-client-cert.key
+
+  certificates:
+    server-cert:
+      public_cert: |
+        -----BEGIN CERTIFICATE-----
+        (Your primary SSL certificate: smtp.example.com.crt)
+        -----END CERTIFICATE-----
+        -----BEGIN CERTIFICATE-----
+        (Your intermediate certificate: example-ca.crt)
+        -----END CERTIFICATE-----
+        -----BEGIN CERTIFICATE-----
+        (Your root certificate: trusted-root.crt)
+        -----END CERTIFICATE-----
+      private_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        (Your Private key)
+        -----END RSA PRIVATE KEY-----
+
+    example.com-relay-client-cert:
+      public_cert: |
+        -----BEGIN CERTIFICATE-----
+        (Your primary SSL certificate: smtp.example.com.crt)
+        -----END CERTIFICATE-----
+      private_key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        (Your Private key)
+        -----END RSA PRIVATE KEY-----

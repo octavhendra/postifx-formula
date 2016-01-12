@@ -1,0 +1,6 @@
+# select maildir from users where email %u and  domain %d
+hosts = localhost
+user = mailreader
+password = this-aa2367f0
+dbname = nusapanel
+query = SELECT vu.mail FROM virtual_users AS vu INNER JOIN virtual_domains AS vd ON vd.id = vu.virtual_domain_id WHERE vd.name = '%d' AND vu.email = '%u'

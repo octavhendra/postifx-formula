@@ -1,0 +1,6 @@
+#querying System Group ID
+hosts = localhost
+user = mailreader
+password = this-aa2367f0
+dbname = nusapanel
+query = SELECT vu.gid FROM virtual_users AS vu INNER JOIN virtual_domains AS vd ON vd.id = vu.virtual_domain_id WHERE vd.name = '%d' AND vu.email = '%u'

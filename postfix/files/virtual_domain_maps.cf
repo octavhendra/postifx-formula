@@ -1,0 +1,6 @@
+# Querying domain
+hosts = localhost
+user = mailreader
+password = this-aa2367f0	
+dbname = nusapanel
+query = SELECT vd.name FROM virtual_domains AS vd INNER JOIN virtual_users AS vu ON vd.id = vu.virtual_domain_id WHERE vd.name = '%d' AND vu.email = '%u'

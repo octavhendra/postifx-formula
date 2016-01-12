@@ -1,0 +1,31 @@
+{% set postfix = salt['grains.filter_by']({
+    'Debian': {
+        'package': 'postfix',
+        'postfix_database': 'postfix-pgsql',
+        'policyd_spf_pkg': 'postfix-policyd-spf-python',
+        'postgrey_pkg': 'postgrey',
+        'service': 'postfix',
+        'aliases_file': '/etc/aliases',
+    },
+    'Gentoo': {
+        'package': 'mail-mta/postfix',
+        'policyd_spf_pkg': 'mail-filter/pypolicyd-spf',
+        'postgrey_pkg': 'mail-filter/postgrey',
+        'service': 'postfix',
+        'aliases_file': '/etc/mail/aliases',
+    },
+    'RedHat': {
+        'package': 'postfix',
+        'policyd_spf_pkg': 'pypolicyd-spf',
+        'postgrey_pkg': 'postgrey',
+        'service': 'postfix',
+        'aliases_file': '/etc/aliases',
+    },
+    'Arch' : {
+        'package': 'postfix',
+        'policyd_spf_pkg': 'python-postfix-policyd-spf',
+        'postgrey_pkg': 'postgrey',
+        'service': 'postfix',
+        'aliases_file': '/etc/aliases',
+    },
+}, merge=salt['pillar.get']('postfix:lookup')) %}
